@@ -1,6 +1,6 @@
 baseURL: "https://hugo-profile.netlify.app"
 languageCode: "en-us"
-title: "Hugo Profile"
+title: "Myles Kornfeld"
 theme: hugo-profile
 
 outputs:
@@ -11,7 +11,7 @@ outputs:
   page:
     - "HTML"
     - "RSS"
-    
+
 Paginate: 3
 enableRobotsTXT: true
 # disqusShortname: your-disqus-shortname
@@ -53,7 +53,7 @@ Menus:
     #   weight: 2
 
 params:
-  title: "Hugo Profile"
+  title: "Myles Kornfeld"
   description: Text about my cool site
   # staticPath: ""  # The path to serve the static files from
   favicon: "/fav.png"
@@ -102,7 +102,7 @@ params:
   navbar:
     align: ms-auto # Left: ms-auto | center: mx-auto | right: me-auto | Default: ms-auto
     # brandLogo: "/logo.png" # Logo for the brand | default is the favicon variable
-    brandName: "Hugo Profile" # Brand name for the brand | default is the title variable
+    brandName: "Myles Kornfeld" # Brand name for the brand | default is the title variable
     disableSearch: false
     menus:
       disableAbout: false
@@ -115,10 +115,11 @@ params:
   # Hero
   hero:
     enable: true
-    intro: "Hi, my name is"
-    title: "Isabella."
-    subtitle: "I build things for the web"
-    content: "A passionate web app developer. I tend to make use of modern web technologies to build websites that looks great, feels fantastic, and functions correctly."
+    #intro: "Hi, my name is"
+    title: "Myles Kornfeld"
+    subtitle: "Data Scientist and AI and Analytics Consultant"
+    #content: "A passionate web app developer. I tend to make use of modern web technologies to build websites that looks great, feels fantastic, and functions correctly."
+    content: "Full time, I am an AI and Analytics Consultant where I help develop full stack solutions for clients and use machine learning and data science to drive insights. On the side, I enjoy tutoring, reading, running, and playing chess."
     image: /images/hero.svg
     button:
       enable: true
@@ -129,12 +130,12 @@ params:
     socialLinks:
       fontAwesomeIcons:
         - icon: fab fa-github
-          url: https://example.com
-        - icon: fab fa-twitter
-          url: https://example.com
-      customIcons:
-        - icon: /fav.png
-          url: "https://example.com"
+          url: https://github.com/mkornfeld
+        - icon: fab fa-linkedin
+          url: https://www.linkedin.com/in/myleskornfeld/
+      # customIcons:
+      #   - icon: /fav.png
+      #     url: "https://example.com"
 
   # About
   about:
@@ -142,7 +143,7 @@ params:
     title: "About Me"
     image: "/images/me.png"
     content: |-
-      I am a software developer with a passion for web development. I have a background in computer science and mathematics, and I have a strong interest in the intersection of technology and art. I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. 
+      I am a software developer with a passion for web development. I have a background in computer science and mathematics, and I have a strong interest in the intersection of technology and art. I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA.
 
       I am currently working on a project that will be used to help people find the best way to get around the city.
     skills:
@@ -227,19 +228,19 @@ params:
     # title: "Custom Name"
     index: false
     items:
-      - title: "Master of Business Administration"
+      - title: "Bachelor of Arts in Physics with Honors"
         school:
-          name: "University of California, Berkeley"
+          name: "The University of Chicago"
           url: "https://example.org"
-        date: "2013 - 2015"
+        date: "2017-2021"
         GPA: "3.8 out of 5.0"
         content: |-
           Extracurricular Activities
-            - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            - Lorem ipsum dolor sit amet consectetur adipisicing elit.
             - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
-      - title: "Bachelor of Science in Computer Science"
+      - title: "Bachelor of Science in Mathematics"
         school:
-          name: "Massachusetts Institute of Technology"
+          name: "The University of Chicago"
           url: "https://example.org"
         date: "2009 - 2013"
         GPA: "3.9 out of 5.0"
@@ -249,7 +250,7 @@ params:
           - Face mask detection using a single convolutional neural network.
 
           Extracurricular Activities
-            - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            - Lorem ipsum dolor sit amet consectetur adipisicing elit.
             - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
         featuredLink:
           enable: true
