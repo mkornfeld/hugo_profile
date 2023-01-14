@@ -50,12 +50,10 @@ from pylab import rcParams
 rcParams['figure.figsize'] = 12,6
 ```
 
-## Pulling the Data
-
-### U.S. Energy Information Administration
+## Pulling Data from the U.S. Energy Information Administration
 The U.S. Energy Information Administration (EIA) collects and disseminates energy data to the public to promote efficient markets, sound policy making, and public education. The EIA makes its data available through dashbarods available here: https://www.eia.gov/tools/. For people who want to pull data locally, the EIA provides documentation for their API here: https://www.eia.gov/opendata/documentation.php. To pull the data, one needs to register an API key. I blurred mine out, but one can easily be obtained from their website. However, their API has several problems. The first is that when trying to determine which data to pull, the options are often hidden, making querying data tedious. Additionally, the maximum number of points that can be pulled per request is 5000 datapoints. If one wants to pull more data, they would either have to paginate or or filter their data in the API call, as opposed to in a dataframe tool, like Pandas, which would be typically more well known by the user. My first class, LoadQuery, addresses these issues.
 
-The class LoadQuery begins by looping through the different pages available, from which the user can select which data they want while having all options available, and then choose which dataset they want to pull. Next, the user will choose the periodicity of the data, if it comes in multiple formats, as well as the type of data that they want to pull, again, if the data comes in mulitple formats. Once chosen, the program will then paginate through the queries until all data is pulled. The data is then turned into a Pandas dataframe format, which can be accessed through the .df attribute of the LoadQuery object. The dataframe will be indexed by date.
+The class LoadQuery begins by looping through the different pages available, from which the user can select which data they want while having all options available, and then choose which dataset they want to pull. Next, the user will choose the periodicity of the data, if it comes in multiple formats, as well as the type of data that they want to pull, again, if the data comes in mulitple formats. Once chosen, the program will then paginate through the queries until all data is pulled. The data is then turned into a Pandas dataframe format, which can be accessed through the ```.df``` attribute of the LoadQuery object. The dataframe will be indexed by date.
 
 ```Python
 date_switch = {'annual':'%Y',
@@ -198,9 +196,9 @@ To build and determine the best model, I built the ForecastModel class below. A 
 
 I perform a GridSearch across a Support Vector regressor, a XGBoost regressor, and a RandomForest regressor. First, I
 
-To build the models, I first call the shift_values() method to shift the values being predicted up a row so that the features in each row will forecast the value for the next day. Next, I call train_models(), which calls the models and performs a GridSearch, trains each model on a 80/20 split, and then performs a forecast by using the datapoints forecasted as the features. I then store the error and the predictions for each model. Afterwards, I align the predictions with the dates they correspond to through update_df().
+To build the models, I first call the ```shift_values()``` method to shift the values being predicted up a row so that the features in each row will forecast the value for the next day. Next, I call ```train_models()```, which calls the models and performs a GridSearch, trains each model on a 80/20 split, and then performs a forecast by using the datapoints forecasted as the features. I then store the error and the predictions for each model. Afterwards, I align the predictions with the dates they correspond to through ```update_df()```.
 
-Finally, I call plot_best_model() to plot with the smallest MAE, while plot_data() plots all three models trained from the GridSearch. Calling find_best_model() works through the above steps and plots the best model. Calling the regerssors attribute will display the final models created for each regressor. Below, I work through two examples.
+Finally, I call ```plot_best_model()``` to plot with the smallest MAE, while plot_data() plots all three models trained from the GridSearch. Calling ```find_best_model()``` works through the above steps and plots the best model. Calling the regressors attribute will display the final models created for each regressor. Below, I work through two examples.
 
 ```Python
 params = {
@@ -349,6 +347,65 @@ natural_gas_query = LoadQuery()
 natural_gas_query.run_all()
 ```
 
+
+```
+Choose your id
+id:  coal  Name:  Coal
+id:  crude-oil-imports  Name:  Crude Oil Imports
+id:  electricity  Name:  Electricity
+id:  international  Name:  International
+id:  natural-gas  Name:  Natural Gas
+id:  nuclear-outages  Name:  Nuclear Outages
+id:  petroleum  Name:  Petroleum
+id:  seds  Name:  State Energy Data System (SEDS)
+id:  steo  Name:  Short Term Energy Outlook
+id:  densified-biomass  Name:  Densified Biomass
+id:  total-energy  Name:  Total Energy
+id:  aeo  Name:  Annual Energy Outlook
+id:  ieo  Name:  International Energy Outlook
+id:  co2-emissions  Name:  State CO2 Emissions
+natural-gas
+Choose your id
+id:  sum  Name:  Summary
+id:  pri  Name:  Prices
+id:  enr  Name:  Exploration and Reserves
+id:  prod  Name:  Production
+id:  move  Name:  Imports and Exports/Pipelines
+id:  stor  Name:  Storage
+id:  cons  Name:  Consumption / End Use
+pri
+Choose your id
+id:  sum  Name:  Natural Gas Prices
+id:  fut  Name:  Natural Gas Spot and Futures Prices (NYMEX)
+id:  rescom  Name:  Average Price of Natural Gas Delivered to Residential and Commercial Consumers by Local Distribution and Marketers in Selected States
+fut
+Choose the frequency
+weekly
+monthly
+daily
+annual
+daily
+11.82 % of the way done
+23.64 % of the way done
+35.46 % of the way done
+47.28 % of the way done
+59.10 % of the way done
+70.92 % of the way done
+82.74 % of the way done
+94.56 % of the way done
+Data has been obtained
+```
+
+I will filter on the series description 'Natural Gas Futures Contract 1 (Dollars per Million Btu)'.
+
+```Python
+series_desc = 'Natural Gas Futures Contract 1 (Dollars per Million Btu)'
+natural_gas_data = natural_gas_query.df[(natural_gas_query.df['series-description'] == series_desc)]
+natural_gas_data = natural_gas_data.dropna()
+natural_gas_data.head()
+```
+
+
 | time_idx            | period              | duoarea   | area-name     | product   | product-name   | process   | process-name      | series   | series-description                                       |   value | units   |
 |:--------------------|:--------------------|:----------|:--------------|:----------|:---------------|:----------|:------------------|:---------|:---------------------------------------------------------|--------:|:--------|
 | 1993-12-20 00:00:00 | 1993-12-20 00:00:00 | Y35NY     | NEW YORK CITY | EPG0      | Natural Gas    | PE4       | Future Contract 4 | RNGC4    | Natural Gas Futures Contract 4 (Dollars per Million Btu) |   1.894 | $/MMBTU |
@@ -356,6 +413,226 @@ natural_gas_query.run_all()
 | 1993-12-22 00:00:00 | 1993-12-22 00:00:00 | Y35NY     | NEW YORK CITY | EPG0      | Natural Gas    | PE4       | Future Contract 4 | RNGC4    | Natural Gas Futures Contract 4 (Dollars per Million Btu) |   1.859 | $/MMBTU |
 | 1993-12-23 00:00:00 | 1993-12-23 00:00:00 | Y35NY     | NEW YORK CITY | EPG0      | Natural Gas    | PE4       | Future Contract 4 | RNGC4    | Natural Gas Futures Contract 4 (Dollars per Million Btu) |   1.895 | $/MMBTU |
 | 1993-12-27 00:00:00 | 1993-12-27 00:00:00 | Y35NY     | NEW YORK CITY | EPG0      | Natural Gas    | PE4       | Future Contract 4 | RNGC4    | Natural Gas Futures Contract 4 (Dollars per Million Btu) |   1.965 | $/MMBTU |
+
+
+I create the model by passing the dataframe ```natural_gas_data```, train the model by having the previous 50 days predict the next day, forecast the next 150 days, and use the data in the column "value".
+
+After training the models, the best model is graphed below. The Support Vector regressor was the best model, and had an r<sup>2</sup> value of 0.982 with the testing data and a mean average error of 0.190.
+
+```Python
+natural_gas_forecast = ForecastModel(df = natural_gas_data, num_shifts = 50, num_predict = 150, col = 'value')
+natural_gas_forecast.find_best_model()
+```
+```
+Training Support Vector Regressor
+Support Vector Regressor trained
+Training RandomForest
+RandomForest trained
+Training XGBoost
+XGBoost trained
+```
+
+<!-- ![title](/images/nat_gas_fut_1.png) -->
+  <p align="center">
+    <img src="/images/nat_gas_fut_1.png" width="700">
+    <img src="/images/nat_gas_fut_2.png" width="700">
+  </p>
+
+Below I plot the best predictions for each of the different regressors. In addition to the Suport Vector regressor, the XGBoost regressor closely predicted the test data, with an r<sup>2</sup> of 0.979 and an MAE of 0.218. The RandomForest regressor, however, clearly did not capture the trends in the data.
+
+```Python
+natural_gas_forecast.plot_data()
+```
+
+<p align="center">
+  <img src="/images/nat_gas_fut_2.png" width="700">
+  <img src="/images/nat_gas_rf.png" width="700">
+  <img src="/images/nat_gas_xgboost.png" width="700">
+</p>
+
+
+## Forecasting Petroleum Futures
+I'll now run through the same process by forecasting New York Harbor No. 2 Heating Oil Future Contract 1.
+
+```Python
+petroleum_forecast = LoadQuery()
+petroleum_forecast.run_all()
+```
+
+```
+Choose your id
+id:  coal  Name:  Coal
+id:  crude-oil-imports  Name:  Crude Oil Imports
+id:  electricity  Name:  Electricity
+id:  international  Name:  International
+id:  natural-gas  Name:  Natural Gas
+id:  nuclear-outages  Name:  Nuclear Outages
+id:  petroleum  Name:  Petroleum
+id:  seds  Name:  State Energy Data System (SEDS)
+id:  steo  Name:  Short Term Energy Outlook
+id:  densified-biomass  Name:  Densified Biomass
+id:  total-energy  Name:  Total Energy
+id:  aeo  Name:  Annual Energy Outlook
+id:  ieo  Name:  International Energy Outlook
+id:  co2-emissions  Name:  State CO2 Emissions
+petroleum
+Choose your id
+id:  sum  Name:  Summary
+id:  pri  Name:  Prices
+id:  crd  Name:  Crude Reserves and Production
+id:  pnp  Name:  Refining and Processing
+id:  move  Name:  Imports/Exports and Movements
+id:  stoc  Name:  Stocks
+id:  cons  Name:  Consumption/Sales
+pri
+Choose your id
+id:  gnd  Name:  Weekly Retail Gasoline and Diesel Prices
+id:  spt  Name:  Spot Prices
+id:  fut  Name:  NYMEX Futures Prices
+id:  wfr  Name:  Weekly Heating Oil and Propane Prices (October - March)
+id:  refmg  Name:  Refiner Gasoline Prices by Grade and Sales Type
+id:  refmg2  Name:  U.S. Refiner Gasoline Prices by Formulation, Grade, Sales Type
+id:  refoth  Name:  Refiner Petroleum Product Prices by Sales Type
+id:  allmg  Name:  Gasoline Prices by Formulation, Grade, Sales Type
+id:  dist  Name:  No. 2 Distillate Prices by Sales Type
+id:  prop  Name:  Propane (Consumer Grade) Prices by Sales Type
+id:  resid  Name:  Residual Fuel Oil Prices by Sales Type
+id:  dfp1  Name:  Domestic Crude Oil First Purchase Prices by Area
+id:  dfp2  Name:  Domestic Crude Oil First Purchase Prices for Selected Crude Streams
+id:  dfp3  Name:  Domestic Crude Oil First Purchase Prices by API Gravity
+id:  rac2  Name:  Refiner Acquisition Cost of Crude Oil
+id:  imc1  Name:  F.O.B. Costs of Imported Crude Oil by Area
+id:  imc2  Name:  F.O.B. Costs of Imported Crude Oil for Selected Crude Streams
+id:  imc3  Name:  F.O.B. Costs of Imported Crude Oil by API Gravity
+id:  land1  Name:  Landed Costs of Imported Crude by Area
+id:  land2  Name:  Landed Costs of Imported Crude for Selected Crude Streams
+id:  land3  Name:  Landed Costs of Imported Crude by API Gravity
+id:  ipct  Name:  Percentages of Total Imported Crude Oil by API Gravity
+fut
+Choose the frequency
+weekly
+daily
+monthly
+annual
+daily
+3.68 % of the way done
+7.36 % of the way done
+11.05 % of the way done
+14.73 % of the way done
+18.41 % of the way done
+22.09 % of the way done
+25.78 % of the way done
+29.46 % of the way done
+33.14 % of the way done
+36.82 % of the way done
+40.50 % of the way done
+44.19 % of the way done
+47.87 % of the way done
+51.55 % of the way done
+55.23 % of the way done
+58.91 % of the way done
+62.60 % of the way done
+66.28 % of the way done
+69.96 % of the way done
+73.64 % of the way done
+77.33 % of the way done
+81.01 % of the way done
+84.69 % of the way done
+88.37 % of the way done
+92.05 % of the way done
+95.74 % of the way done
+99.42 % of the way done
+Data has been obtained
+```
+
+
+```Python
+petroleum_forecast.df.head()
+```
+
+| time_idx            | period              | duoarea   | area-name     | product   | product-name                | process   | process-name      | series                  | series-description                                                       |   value | units   |
+|:--------------------|:--------------------|:----------|:--------------|:----------|:----------------------------|:----------|:------------------|:------------------------|:-------------------------------------------------------------------------|--------:|:--------|
+| 1980-01-02 00:00:00 | 1980-01-02 00:00:00 | Y35NY     | NEW YORK CITY | EPD2F     | No 2 Fuel Oil / Heating Oil | PE1       | Future Contract 1 | EER_EPD2F_PE1_Y35NY_DPG | New York Harbor No. 2 Heating Oil Future Contract 1 (Dollars per Gallon) |   0.821 | $/GAL   |
+| 1980-01-02 00:00:00 | 1980-01-02 00:00:00 | Y35NY     | NEW YORK CITY | EPD2F     | No 2 Fuel Oil / Heating Oil | PE3       | Future Contract 3 | EER_EPD2F_PE3_Y35NY_DPG | New York Harbor No. 2 Heating Oil Future Contract 3 (Dollars per Gallon) |   0.89  | $/GAL   |
+| 1980-01-03 00:00:00 | 1980-01-03 00:00:00 | Y35NY     | NEW YORK CITY | EPD2F     | No 2 Fuel Oil / Heating Oil | PE1       | Future Contract 1 | EER_EPD2F_PE1_Y35NY_DPG | New York Harbor No. 2 Heating Oil Future Contract 1 (Dollars per Gallon) |   0.827 | $/GAL   || 1980-01-03 00:00:00 | 1980-01-03 00:00:00 | Y35NY     | NEW YORK CITY | EPD2F     | No 2 Fuel Oil / Heating Oil | PE3       | Future Contract 3 | EER_EPD2F_PE3_Y35NY_DPG | New York Harbor No. 2 Heating Oil Future Contract 3 (Dollars per Gallon) |   0.866 | $/GAL   |
+| 1980-01-04 00:00:00 | 1980-01-04 00:00:00 | Y35NY     | NEW YORK CITY | EPD2F     | No 2 Fuel Oil / Heating Oil | PE3       | Future Contract 3 | EER_EPD2F_PE3_Y35NY_DPG | New York Harbor No. 2 Heating Oil Future Contract 3 (Dollars per Gallon) |   0.88  | $/GAL   |
+
+```Python
+petroleum_forecast.df['series-description'].unique()
+```
+
+```
+array(['Natural Gas Futures Contract 4 (Dollars per Million Btu)',
+       'Natural Gas Futures Contract 2 (Dollars per Million Btu)',
+       'Natural Gas Futures Contract 1 (Dollars per Million Btu)',
+       'Natural Gas Futures Contract 3 (Dollars per Million Btu)',
+       'Henry Hub Natural Gas Spot Price (Dollars per Million Btu)'],
+      dtype=object)
+```
+
+
+```
+array(['New York Harbor No. 2 Heating Oil Future Contract 3 (Dollars per Gallon)',
+       'New York Harbor No. 2 Heating Oil Future Contract 1 (Dollars per Gallon)',
+       'Cushing, OK Crude Oil Future Contract 3 (Dollars per Barrel)',
+       'Cushing, OK Crude Oil Future Contract 1 (Dollars per Barrel)',
+       'New York Harbor Regular Gasoline Future Contract 3 (Dollars per Gallon)',
+       'New York Harbor Regular Gasoline Future Contract 1 (Dollars per Gallon)',
+       'Cushing, OK Crude Oil Future Contract 2 (Dollars per Barrel)',
+       'Cushing, OK Crude Oil Future Contract 4 (Dollars per Barrel)',
+       'Mont Belvieu, Tx Propane Future Contract 1 (Dollars per Gallon)',
+       'Mont Belvieu, Tx Propane Future Contract 4 (Dollars per Gallon)',
+       'New York Harbor No. 2 Heating Oil Future Contract 4 (Dollars per Gallon)',
+       'New York Harbor Regular Gasoline Future Contract 2 (Dollars per Gallon)',
+       'New York Harbor Regular Gasoline Future Contract 4 (Dollars per Gallon)',
+       'New York Harbor No. 2 Heating Oil Future Contract 2 (Dollars per Gallon)',
+       'Mont Belvieu, Tx Propane Future Contract 2 (Dollars per Gallon)',
+       'Mont Belvieu, Tx Propane Future Contract 3 (Dollars per Gallon)',
+       'New York Harbor Reformulated RBOB Regular Gasoline Future Contract 2 (Dollars per Gallon)',
+       'New York Harbor Reformulated RBOB Regular Gasoline Future Contract 1 (Dollars per Gallon)',
+       'New York Harbor Reformulated RBOB Regular Gasoline Future Contract 4 (Dollars per Gallon)',
+       'New York Harbor Reformulated RBOB Regular Gasoline Future Contract 3 (Dollars per Gallon)'],
+      dtype=object)
+```
+
+```Python
+petreoleum_forecast_data.df = petroleum_forecast.df[petroleum_forecast.df['series-description'] == 'New York Harbor No. 2 Heating Oil Future Contract 1 (Dollars per Gallon)']
+petreoleum_forecast_data.df = petreoleum_forecast_data.df.dropna()
+```
+
+After training the different models, this time the XGBoost regressor had the smallest MAE at 0.080 and the largest r<sup>2</sup> at 0.985 for the testing data.
+
+```Python
+petroleum_forecast_model = ForecastModel(df = petreoleum_forecast_data.df, num_shifts = 50, num_predict = 150, col = 'value')
+petroleum_forecast_model.find_best_model()
+```
+
+```
+Training Support Vector Regressor
+Support Vector Regressor trained
+Training RandomForest
+RandomForest trained
+Training XGBoost
+XGBoost trained
+```
+
+
+PLOT DATA HERE
+
+Looking at the rest of the models, we see that the Support Vector regressor also predicted the data very well, while the RandomForest regressor was unable to capture the trend.
+
+
+```Python
+petroleum_forecast_model.plot_data()
+```
+
+PLOT DATA HERE
+
+## Conclusions and Next Steps
+
+Taking a look at the natural gas and petroleum futures predictions, we are able to see that the models captured the volatility due to the Covid-19 pandemic and the invasion of Ukraine in their forecasting. As a result, it seems that univariate time-series models can be useful and cost-effective in forecasting markets.
+
+I believe that there are several ways to improve this project. First, when testing the models across other datasets, the models were occasionally unable to capture seasonality in the data. As a result, when data appears more seasonal, performing a seasonality decomposition could increase model performance. Secondly, there were some datasets where models had more difficulty making predictions. Creating a multivariate model that incorporates features such as GDP, local and international conflicts, different weather events, and location could improve model performance as well.
 
 <!--
 ## Paragraph
