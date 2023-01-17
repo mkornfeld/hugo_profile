@@ -8,7 +8,7 @@ tags:
   - Forecasting
   - Energy
   - Regression
-image: /images/post.jpg
+image: /images/nat_gas_fut_1f.png
 description: ""
 toc:
 ---
@@ -51,7 +51,7 @@ rcParams['figure.figsize'] = 12,6
 ```
 
 ## Pulling Data from the U.S. Energy Information Administration
-The U.S. Energy Information Administration (EIA) collects and disseminates energy data to the public to promote efficient markets, sound policy making, and public education. The EIA makes its data available through dashbarods available here: https://www.eia.gov/tools/. For people who want to pull data locally, the EIA provides documentation for their API here: https://www.eia.gov/opendata/documentation.php. To pull the data, one needs to register an API key. I blurred mine out, but one can easily be obtained from their website. However, their API has several problems. The first is that when trying to determine which data to pull, the options are often hidden, making querying data tedious. Additionally, the maximum number of points that can be pulled per request is 5000 datapoints. If one wants to pull more data, they would either have to paginate or or filter their data in the API call, as opposed to in a dataframe tool, like Pandas, which would be typically more well known by the user. My first class, LoadQuery, addresses these issues.
+The U.S. Energy Information Administration (EIA) collects and disseminates energy data to the public to promote efficient markets, sound policy making, and public education. The EIA makes its data available through dashboards available here: https://www.eia.gov/tools/. For people who want to pull data locally, the EIA provides documentation for their API here: https://www.eia.gov/opendata/documentation.php. To pull the data, one needs to register an API key. I blurred mine out, but one can easily be obtained from their website. However, their API has several problems. The first is that when trying to determine which data to pull, the options are often hidden, making querying data tedious. Additionally, the maximum number of points that can be pulled per request is 5000 datapoints. If one wants to pull more data, they would either have to paginate or or filter their data in the API call, as opposed to in a dataframe tool, like Pandas, which would be typically more well known by the user. My first class, LoadQuery, addresses these issues.
 
 The class LoadQuery begins by looping through the different pages available, from which the user can select which data they want while having all options available, and then choose which dataset they want to pull. Next, the user will choose the periodicity of the data, if it comes in multiple formats, as well as the type of data that they want to pull, again, if the data comes in mulitple formats. Once chosen, the program will then paginate through the queries until all data is pulled. The data is then turned into a Pandas dataframe format, which can be accessed through the ```.df``` attribute of the LoadQuery object. The dataframe will be indexed by date.
 
@@ -396,6 +396,21 @@ daily
 Data has been obtained
 ```
 
+Now that the data has been obtained, I call the dataframe to see the different features and how to filter for Contract 1.
+
+```Python
+natural_gas_query.df['series-description'].unique()
+```
+
+```
+array(['Natural Gas Futures Contract 4 (Dollars per Million Btu)',
+       'Natural Gas Futures Contract 2 (Dollars per Million Btu)',
+       'Natural Gas Futures Contract 1 (Dollars per Million Btu)',
+       'Natural Gas Futures Contract 3 (Dollars per Million Btu)',
+       'Henry Hub Natural Gas Spot Price (Dollars per Million Btu)'],
+      dtype=object)
+```
+
 I will filter on the series description 'Natural Gas Futures Contract 1 (Dollars per Million Btu)'.
 
 ```Python
@@ -432,10 +447,14 @@ Training XGBoost
 XGBoost trained
 ```
 
-<!-- ![title](/images/nat_gas_fut_1.png) -->
+<!-- ![title](/images/nat_gas_fut_1.png)
+![title](/images/nat_gas_fut_2.png) -->
   <p align="center">
-    <img src="/images/nat_gas_fut_1.png" width="700">
-    <img src="/images/nat_gas_fut_2.png" width="700">
+    <img src="/images/nat_gas_fut_1f.png" width="700">
+  </p>
+
+  <p align="center">
+    <img src="/images/nat_gas_fut_2f.png" width="700">
   </p>
 
 Below I plot the best predictions for each of the different regressors. In addition to the Suport Vector regressor, the XGBoost regressor closely predicted the test data, with an r<sup>2</sup> of 0.979 and an MAE of 0.218. The RandomForest regressor, however, clearly did not capture the trends in the data.
@@ -445,9 +464,13 @@ natural_gas_forecast.plot_data()
 ```
 
 <p align="center">
-  <img src="/images/nat_gas_fut_2.png" width="700">
-  <img src="/images/nat_gas_rf.png" width="700">
-  <img src="/images/nat_gas_xgboost.png" width="700">
+  <img src="/images/nat_gas_fut_1f.png" width="700">
+</p>
+<p align="center">
+  <img src="/images/nat_gas_fut_rff.png" width="700">
+</p>
+<p align="center">
+  <img src="/images/nat_gas_fut_xgboostf.png" width="700">
 </p>
 
 
@@ -560,16 +583,6 @@ petroleum_forecast.df.head()
 ```Python
 petroleum_forecast.df['series-description'].unique()
 ```
-
-```
-array(['Natural Gas Futures Contract 4 (Dollars per Million Btu)',
-       'Natural Gas Futures Contract 2 (Dollars per Million Btu)',
-       'Natural Gas Futures Contract 1 (Dollars per Million Btu)',
-       'Natural Gas Futures Contract 3 (Dollars per Million Btu)',
-       'Henry Hub Natural Gas Spot Price (Dollars per Million Btu)'],
-      dtype=object)
-```
-
 
 ```
 array(['New York Harbor No. 2 Heating Oil Future Contract 3 (Dollars per Gallon)',

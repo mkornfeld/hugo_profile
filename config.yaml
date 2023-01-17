@@ -108,7 +108,7 @@ params:
       disableAbout: false
       disableExperience: false
       disableEducation: false
-      disableProjects: false
+      disableProjects: true
       disableAchievements: false
       disableContact: false
 
@@ -123,10 +123,10 @@ params:
     image: /images/myself.jpg
     button:
       enable: true
-      name: "Resume"
-      url: "#"
-      download: true
-      newPage: false
+      name: "Portfolio"
+      url: "/blogs"
+      download: false
+      newPage: true
     socialLinks:
       fontAwesomeIcons:
         - icon: fab fa-github
@@ -142,10 +142,17 @@ params:
     enable: true
     title: "About Me"
     image: "/images/me.png"
-    content: |-
-      I am a software developer with a passion for web development. I have a background in computer science and mathematics, and I have a strong interest in the intersection of technology and art. I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA.
+    content:
 
-      I am currently working on a project that will be used to help people find the best way to get around the city.
+      <h3> IBM </h3>
+      At IBM, I am a full stack AI and Analytics consultant. There, I work with clients to to drive insights through data science and ensure that their data can be accessed throughout their enterprise. Most recently, my team designed a data architecture solution for a multibillion dollar company. In the past, I worked in-house to test and develop forecasting and data harmonization software for clients.
+      <br><br>
+      <h3> The University of Chicago </h3>
+      When I first enrolled in UChicago, my goal was to study physics, attend graduate school, and eventually be a professor and perform research. Finding patterns from data and to then understand a larger picture through math was exciting, and I was excited to pursue this field in such a rigorous environment. During my time at UChicago, I challenged myself while helping others grow. I graduated in July 2021 with a BA in Physics with honors and a BS in Mathematics; my favorite classes included Graduate Quantum Mechanics and Graduate Relativity; I became the President of the Society of Physics Students, where I ran several fundraisers to promote STEM education.
+      <br><br>
+      I was fortunate enough to be able to intern at Fermilab, a national physics laboratory, throughout college. When I was a third-year, I worked in their theoretical physics department. For my main project, I worked alongside theoretical physicists, nuclear physicists, and neutrino physicists to develop software that could simulate the interactions between  particles in any environment. More specifically, I developed software that simulated the interactions between known neutrinos and theoretical neutrinos using Monte Carlo simulations.
+      <br><br>
+      While at Fermilab, I found that my true passion lay in coding and running situations. It was during this period that I taught myself how to implement neural networks for forecasting, NLP, and image recognition. I also took classes, such as Introduction to Random Matrices, to pursue this interest. After several side projects, I decided to pursue data science full time after college.
     skills:
       enable: true
       title: "Here are a few technologies I've been working with recently:"
@@ -162,10 +169,10 @@ params:
     items:
       - job: "AI and Analytics Consultant"
         company: "IBM"
-        companyUrl: "https://example.com"
+        companyUrl: "https://www.ibm.com/us-en?ar=1"
         date: "Jul 2021 - present"
         featuredLink:
-          enable: true
+          enable: false
           name: "View the project"
           url: "https://example.com"
         content: |
@@ -181,8 +188,8 @@ params:
         companyUrl: "https://example.com"
         date: "Jul 2018 - Nov 2020"
         featuredLink:
-          enable: true
-          url: "https://example.com"
+          enable: false
+          url: "https://www.fnal.gov/"
         # info:
         #   enable: true
         #   content: I worked as a research assistant during my time in college atFermilab.
@@ -192,10 +199,10 @@ params:
           - Lead backend developer for a product.
           - Created a frontend design for a product.
 
-      - job: "Junior Software Developer"
-        company: "Apple"
+      - job: "Tutor"
+        company: "Self-employeed"
         companyUrl: "https://example.com"
-        date: "Jan 2020 - Aug 2020"
+        date: "Jan 2013 - Present"
         info:
           enable: false
         featuredLink:
@@ -235,9 +242,9 @@ params:
       - title: "Bachelor of Arts in Physics with Honors, Bachelor of Sciences in Mathematics"
         school:
           name: "The University of Chicago"
-          url: "https://example.org"
+          url: "https://www.uchicago.edu/"
         date: "2017-2021"
-        GPA: "3.76 out of 4.0"
+        GPA: "3.76/4.0"
         content: |-
           Favorite Classes
             - Graduate Quantum Mechanics I, II
@@ -267,10 +274,10 @@ params:
       - title: "High School"
         school:
           name: "Scarsdale High School"
-          url: "https://example.org"
-        GPA: "4.2 out of 5.0"
+          url: "https://www.scarsdaleschools.k12.ny.us/hs"
+        #GPA: "4.2 out of 5.0"
         featuredLink:
-          enable: true
+          enable: false
           url: "https://example.com"
 
   # Achievements
@@ -355,7 +362,7 @@ params:
       path: "blogs"
       count: 3
       title: Recent Posts
-      enable: true
+      enable: false
       disableFeaturedImage: false
     socialNetworks:
       github: https://github.com/mkornfeld
