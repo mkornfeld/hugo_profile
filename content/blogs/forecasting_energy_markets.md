@@ -47,6 +47,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from pylab import rcParams
+rcParams['figure.facecolor'] = 'white'
+rcParams['axes.facecolor'] = 'white'
 rcParams['figure.figsize'] = 12,6
 ```
 
@@ -613,7 +615,7 @@ petreoleum_forecast_data.df = petroleum_forecast.df[petroleum_forecast.df['serie
 petreoleum_forecast_data.df = petreoleum_forecast_data.df.dropna()
 ```
 
-After training the different models, this time the XGBoost regressor had the smallest MAE at 0.080 and the largest r<sup>2</sup> at 0.985 for the testing data.
+After training the different models, this time the XGBoost regressor had the smallest MAE at 0.088 and the largest r<sup>2</sup> at 0.982 for the testing data.
 
 ```Python
 petroleum_forecast_model = ForecastModel(df = petreoleum_forecast_data.df, num_shifts = 50, num_predict = 150, col = 'value')
@@ -628,18 +630,31 @@ RandomForest trained
 Training XGBoost
 XGBoost trained
 ```
+<p align="center">
+  <img src="/images/pet_fut_11.png" width="700">
+</p>
+<p align="center">
+  <img src="/images/pet_fut_zoom.png" width="700">
+</p>
 
-
-PLOT DATA HERE
 
 Looking at the rest of the models, we see that the Support Vector regressor also predicted the data very well, while the RandomForest regressor was unable to capture the trend.
-
 
 ```Python
 petroleum_forecast_model.plot_data()
 ```
 
-PLOT DATA HERE
+
+<p align="center">
+  <img src="/images/pet_fut_svr.png" width="700">
+</p>
+<p align="center">
+  <img src="/images/pet_fut_rf.png" width="700">
+</p>
+<p align="center">
+  <img src="/images/pet_fut_zoom.png" width="700">
+</p>
+
 
 ## Conclusions and Next Steps
 
