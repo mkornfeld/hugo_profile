@@ -1,13 +1,13 @@
 ---
-title: "Predicting Energy Futures"
-date: 2023-01-03T23:29:21+05:30
+title: "Negation Sentiment with NLP"
+date: 2023-01-018T23:29:21+05:30
 draft: false
-github_link: "https://github.com/mkornfeld/energy_project"
+github_link: "https://github.com/mkornfeld/negation_nlp"
 author: "Myles Kornfeld"
 tags:
-  - Forecasting
-  - Energy
-  - Regression
+  - NLP
+  - Sentiment Analysis
+  - Machine Learning
 image: /images/nat_gas_fut_1f.png
 description: ""
 toc:

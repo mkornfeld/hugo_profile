@@ -144,23 +144,29 @@ params:
     image: "/images/me.png"
     content:
 
-      <h3> IBM </h3>
+      <h4> IBM </h4>
       At IBM, I am a full stack AI and Analytics consultant. There, I work with clients to to drive insights through data science and ensure that their data can be accessed throughout their enterprise. Most recently, my team designed a data architecture solution for a multibillion dollar company. In the past, I worked in-house to test and develop forecasting and data harmonization software for clients.
       <br><br>
-      <h3> The University of Chicago </h3>
+      <h4> The University of Chicago </h4>
       When I first enrolled in UChicago, my goal was to study physics, attend graduate school, and eventually be a professor and perform research. Finding patterns from data and to then understand a larger picture through math was exciting, and I was excited to pursue this field in such a rigorous environment. During my time at UChicago, I challenged myself while helping others grow. I graduated in July 2021 with a BA in Physics with honors and a BS in Mathematics; my favorite classes included Graduate Quantum Mechanics and Graduate Relativity; I became the President of the Society of Physics Students, where I ran several fundraisers to promote STEM education.
       <br><br>
       I was fortunate enough to be able to intern at Fermilab, a national physics laboratory, throughout college. When I was a third-year, I worked in their theoretical physics department. For my main project, I worked alongside theoretical physicists, nuclear physicists, and neutrino physicists to develop software that could simulate the interactions between  particles in any environment. More specifically, I developed software that simulated the interactions between known neutrinos and theoretical neutrinos using Monte Carlo simulations.
       <br><br>
       While at Fermilab, I found that my true passion lay in coding and running situations. It was during this period that I taught myself how to implement neural networks for forecasting, NLP, and image recognition. I also took classes, such as Introduction to Random Matrices, to pursue this interest. After several side projects, I decided to pursue data science full time after college.
+      <br><br>
+      <h4>Skills</h4>
     skills:
       enable: true
-      title: "Here are a few technologies I've been working with recently:"
+      title: "Here are a few tools and techniques I've been working with recently:"
       items:
         - "Python"
         - "Pandas"
         - "Numpy"
         - "MatPlotlib"
+        - "Tensorflow"
+        - "Sklearn"
+        - "NLP"
+        - "Forecasting"
 
   # Experience
   experience:
@@ -361,8 +367,8 @@ params:
     recentPosts:
       path: "blogs"
       count: 3
-      title: Recent Posts
-      enable: false
+      title: Portfolio Projects
+      enable: true
       disableFeaturedImage: false
     socialNetworks:
       github: https://github.com/mkornfeld
