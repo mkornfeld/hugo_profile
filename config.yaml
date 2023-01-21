@@ -141,7 +141,7 @@ params:
   about:
     enable: true
     title: "About Me"
-    image: "/images/me.png"
+    image: "/images/myles2.png"
     content:
 
       <h4> IBM </h4>
@@ -205,17 +205,18 @@ params:
           - Lead backend developer for a product.
           - Created a frontend design for a product.
 
-      - job: "Tutor"
-        company: "Self-employeed"
-        companyUrl: "https://example.com"
+      - job: "Self-employeed"
+        company: "Tutoring"
+        #companyUrl: "https://example.com"
         date: "Jan 2013 - Present"
         info:
           enable: false
         featuredLink:
-          enable: true
+          enable: false
           url: "https://example.com"
         content: |
-          I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city.
+          For the past 10 years, I have worked as a tutor in various capacities. During college, I was a TA for Calculus throughout my 4 years, 
+          and now I tutor in middle school, high school, and college level math and phsyics. If you are interested, feel free to contact me. Topics I have experience tutoring include:
 
           - Lead backend developer for a product.
           - Created a frontend design for a product.
