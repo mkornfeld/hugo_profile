@@ -182,17 +182,31 @@ params:
           name: "View the project"
           url: "https://example.com"
         content: |
-          I am currently working as an AI and Analytics Consultant at IBM. I am currently working with a client to implement a new cloud architecture solution to streamline the company.
-          I also lead knowledge transfer sessions that help others learn more about data science and machine learning. During my time at IBM, I have also:
+          I am currently working as an AI and Analytics Consultant at IBM. Below I list my current and previous projects. On the side, I deliver knowledge transfer sessions on data science topics to my team.
 
-          - Tested and machine learning software to automatically forecast a company's financials.
-          - Built and deployed new functionality for an internal project.
-          - Built and deployed the unit testing functionality for an internal project.
+          Current Project:<br>
+          - Developer<br>
+            - Increase sign-off delivery speed for new features for Fortune 500 company by developing custom software
+
+          Previous Projects:<br>
+          - Cloud Architecture Designer<br>
+            - Building a data management and analytical architecture for our client based on their needs
+            - Analyzed employee sentiment based on unstructured data collected from a workshop to determine how to best fit their needs
+
+          - Internal Developer<br>
+            - Developed a web-based application using the Django Python framework to forecast and map companies' financial data
+            - Built the unit testing functionality for the application to help other developers build and test new tools more efficiently
+
+          - RTR Testing Coordinator<br>
+            - Deployed SAP, ALM and Scrum to help teams implement SAP S/4HANA for client
+            - Facilitated the testing of the Record to Report (RTR) end to end processes
+            - Deployed Excel and ALM to track my team’s testing progress, coordinated and directed testing between different teams, and presented the status of our testing to my team and my supervisors daily
+
 
       - job: "Research Assistant"
         company: "Fermilab"
-        companyUrl: "https://example.com"
-        date: "Jul 2018 - Nov 2020"
+        companyUrl: "https://www.fnal.gov/"
+        date: "July 2018 - November 2020"
         featuredLink:
           enable: false
           url: "https://www.fnal.gov/"
@@ -200,13 +214,15 @@ params:
         #   enable: true
         #   content: I worked as a research assistant during my time in college atFermilab.
         content: |
-          I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city.
+          During my time at Fermilab, I grew my coding and analytics skills. I developed classes to runs imulations, learned and deployed statistics, and worked in a team. More specifically, I
+          - Developed software that simulated theoretical particle interactions by writing a custom class in Python, performing Monte Carlo and other integration techniques in Python, and developing the unit testing
+          - Compared calculations with members of my team to determine the validity of our predictions
+          - Implemented Monte Carlo simulations in Python to model particle interactions and compared these simulations to predictions made by Quantum Field Theory
 
-          - Lead backend developer for a product.
-          - Created a frontend design for a product.
 
-      - job: "Self-employeed"
-        company: "Tutoring"
+
+      - job: "Tutoring"
+        company: "Self-Employeed"
         #companyUrl: "https://example.com"
         date: "Jan 2013 - Present"
         info:
@@ -215,30 +231,26 @@ params:
           enable: false
           url: "https://example.com"
         content: |
-          For the past 10 years, I have worked as a tutor in various capacities. During college, I was a TA for Calculus throughout my 4 years, 
-          and now I tutor in middle school, high school, and college level math and phsyics. If you are interested, feel free to contact me. Topics I have experience tutoring include:
+          Calculus throughout my 4 years, where I worked with students during office hours and graded assignments. Topics that I have taught include trigonometry, precalculus, calculus I-IV, linear algebra, differential equations, and mechanics. I have found success with my students by assigning them homework, creating problems that address their weaknesses, and reinforcing topics they are comfortable with.
 
-          - Lead backend developer for a product.
-          - Created a frontend design for a product.
-
-      - job: "UI/UX Designer"
-        company: "Netflix"
-        companyUrl: "https://example.com"
-        date: "June 2017 - Nov 2019"
+      - job: "Research Assistant"
+        company: "UChicago STEM Education"
+        companyUrl: "https://stemed.uchicago.edu/"
+        date: "January 2020 - June 2021"
         featuredLink:
           enable: true
-          url: "https://example.com"
+          url: "https://stemed.uchicago.edu/"
         content: |
-          I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city.
+          As a third-year and fourth-year in college, I worked with the University of Chicago's STEM Education Office, where I drew insights from a curriculum that we implemented at Chicago public schools and performed various office duties.
+          - Designed, executed, and analyzed survey results using Python, Excel, and SQL to draw meaningful conclusions regarding the results of the implementation of a district wide school program
+          - Identified and achieved savings opportunity to reclaim $600 of unused funds 
+          - Write reports on teachers’ experiences in the World Chicago’s Professional Fellows Program based off of interviews of participants in the program
 
-          - Lead backend developer for a product.
-          - Created a frontend design for a product.
-
-      - job: "Product Designer"
-        company: "Google"
-        companyUrl: "https://example.com"
-        date: "Feb 2016 - Mar 2017"
-        content: "I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city."
+      # - job: "Product Designer"
+      #   company: "Google"
+      #   companyUrl: "https://example.com"
+      #   date: "Feb 2016 - Mar 2017"
+      #   content: "I am currently working as a software developer at [example org.](https://example.com) in San Francisco, CA. I am currently working on a project that will be used to help people find the best way to get around the city."
 
   # Education
   education:
@@ -251,15 +263,18 @@ params:
           name: "The University of Chicago"
           url: "https://www.uchicago.edu/"
         date: "2017-2021"
-        GPA: "3.76/4.0"
+        GPA: "3.76/4.00"
         content: |-
+          Extracurricular Activities
+            - President of the Society of Physics Students
+            - Assistant Chair of Model United Nations at the University of Chicago
+            - Brother of Alpha Phi Omega, a national service fraternity
+
           Favorite Classes
             - Graduate Quantum Mechanics I, II
             - Graduate General Relativity
 
-          Extracurricular Activities
-            - President of the Society of Physics Students
-            - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
+          
       # - title: "Bachelor of Science in Mathematics"
       #   school:
       #     name: "The University of Chicago"
@@ -285,26 +300,26 @@ params:
         #GPA: "4.2 out of 5.0"
         featuredLink:
           enable: false
-          url: "https://example.com"
+          url: "https://www.scarsdaleschools.k12.ny.us/hs"
 
   # Achievements
   achievements:
     enable: true
     # title: "Custom Name"
     items:
-      - title: Google kickstart runner
-        content: I solved all problems with optimal solution.
-        url: https://example.com
-      - title: Facebook Hackathon Winner
-        content: Developed a product using Artificial Intelligence.
-      - title: Hugo Profile
-        content: Developed a theme and getting 1K+ downloads per month.
-        url: "https://github.com/gurusabarish/hugo-profile"
-      - title: Microsoft Imagine Runner
-        content: We are developed a product which can help others.
-      - title: Google Summer of Code
-        content: Contributed to a open source project.
-        url: https://example.com
+      - title: Spark Chamber
+        content: Constructed a spark chamber with other students at UChicago that is now on display at the Kersten Physics Teaching Center.
+        #url: https://example.com
+      - title: Integral Bee
+        content: Planned and executed a competition where students solved integrals as fast as possible that raised money for girls to pursue STEM.
+      - title: Half-marathon
+        content: Ran the Chicago half-marathon in 2019.
+        #url: "https://github.com/gurusabarish/hugo-profile"
+      # - title: Microsoft Imagine Runner
+      #   content: We are developed a product which can help others.
+      # - title: Google Summer of Code
+      #   content: Contributed to a open source project.
+      #   url: https://example.com
 
   # projects
   projects:
