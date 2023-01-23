@@ -126,7 +126,7 @@ params:
       name: "Portfolio"
       url: "/blogs"
       download: false
-      newPage: true
+      newPage: false
     socialLinks:
       fontAwesomeIcons:
         - icon: fab fa-github
@@ -134,7 +134,7 @@ params:
         - icon: fab fa-linkedin
           url: https://www.linkedin.com/in/myleskornfeld/
       # customIcons:
-      #   - icon: /fav.png
+      #   - icon: /logo.png
       #     url: "https://example.com"
 
   # About
@@ -377,7 +377,7 @@ params:
     # title: "Custom Name"
     content: My inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!
     email: myleskornfeld@gmail.com
-    btnName: Mail me
+    btnName: Email Me
 
   footer:
     recentPosts:

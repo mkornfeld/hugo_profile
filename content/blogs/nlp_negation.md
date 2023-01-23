@@ -1,6 +1,6 @@
 ---
 title: "Negation Sentiment with NLP"
-date: 2023-01-018T23:29:21+05:30
+date: 2023-01-18T23:29:21+05:30
 draft: false
 github_link: "https://github.com/mkornfeld/negation_nlp"
 author: "Myles Kornfeld"
@@ -13,184 +13,146 @@ description: ""
 toc:
 ---
 
-# Forecasting Energy Markets
+# Analyzing Negation Sentiments with NLP
 
 ## Introduction
 
-Over the past several years, global events have rocked the energy markets: the Covid-19 pandemic caused the price of oil to crash, while a combination of inflation and the sanctions placed on Russia due to its invasion of Ukraine have caused the price of oil and natural gas to skyrocket. As a result, it is important to be able to forecast energy markets accurately despite global uncertainty.
+Throughout various industries, Natural Language Processing (NLP) models can be used to solve many problems: organizations can use NLP analysis to understand employee satisfaction; companies can use NLP to understand consumer sentiment for a project; investments firms can use NLP to understand the market's sentiment around a specific stock or company. By performing NLP, organizations can gain quantitative insights from qualitative data.
 
-With this in mind, my project aims at developing a tool to forecast energy markets consistently and accurately in a time-effective manner. This tool can help governments allocate resources efficiently and help investors optimize trading futures. Specifically, by pulling publicly available data, I will train different univariate models on past values to forecast future values.
+One problem that currently faces the field is analyzing sentiment when negations are present. For example, the sentence "Don't do that again!" can be interpreted in a positive context (if, for example, a person pranked another person) or in a negative context (if a person caused harm to another person). Denials, imperatives, questions, and rejections are all forms have negations that can decrease accuracy. Ultimately, creating a model that can determine sentiment with negations present is important as organizations can use this model alongside other models to gain more accurate insights.
+
+With this in mind, my project aims at developing a model that analyzes sentiment analysis with negations present. By analyzing tweets that specifically contain any or all of the words "no", "not", "never", and "didn't", I attempt to build a machine learning model that can accurately classify these sentiments as either positive or negative.
 
 ## Tools
-I will be creating these models using Python. In particular, I will be using the pandas and numpy libraries to clean the data, the requests and json libraries to pull and parse the data, and the sklearn library to prepare the data. I will be using a XGBoost regressor, a Support Vector regressor, and a Random Forest regressor to forecast the data.
+I will be creating these models using Python. In particular, I will be using the ```pandas``` and ```numpy``` libraries to clean the data, the ```sklearn``` library to prepare the data, and ```keras``` to build and train the models. I also use the ```nltk``` library to provide stopwords.
 
 
 ```python
-import requests
+import tensorflow as tf
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.text import text_to_word_sequence
+from tensorflow.keras.preprocessing.text import Tokenizer
+
 import pandas as pd
 import numpy as np
-import json
 import matplotlib.pyplot as plt
-import itertools
-import math
-import datetime
 
-import xgboost as xgb
-from xgboost import XGBRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVR
-
-import sklearn
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
-from pylab import rcParams
-rcParams['figure.facecolor'] = 'white'
-rcParams['axes.facecolor'] = 'white'
-rcParams['figure.figsize'] = 12,6
+
+import nltk
+from nltk.corpus import stopwords
+nltk.download('punkt')
+nltk.download('brown')
+nltk.download('stopwords')
+stop = stopwords.words('english')
+stop = set(stopwords.words('english')) - {'no', 'not','never',"don't",'never','nor'}
 ```
+When preparing data for NLP, commonly used words, such as "our", "such", and "out", are typically removed from datasets as these are words that do not provide the true sentiment regarding a statement. For this project, I am making sure to include the negations because I want my model to be able to recognize those words, as shown in redefining the set above.
 
-## Pulling Data from the U.S. Energy Information Administration
-The U.S. Energy Information Administration (EIA) collects and disseminates energy data to the public to promote efficient markets, sound policy making, and public education. The EIA makes its data available through dashboards available here: https://www.eia.gov/tools/. For people who want to pull data locally, the EIA provides documentation for their API here: https://www.eia.gov/opendata/documentation.php. To pull the data, one needs to register an API key. I blurred mine out, but one can easily be obtained from their website. However, their API has several problems. The first is that when trying to determine which data to pull, the options are often hidden, making querying data tedious. Additionally, the maximum number of points that can be pulled per request is 5000 datapoints. If one wants to pull more data, they would either have to paginate or or filter their data in the API call, as opposed to in a dataframe tool, like Pandas, which would be typically more well known by the user. My first class, LoadQuery, addresses these issues.
+## Data Collection and Preparation
+I collected data from [Sentiment140](http://help.sentiment140.com/home), a group run by former Computer Science graduate students at Stanford. They offer machine learning sentiment analysis services on tweets, and offer their [training and testing](http://help.sentiment140.com/for-students/) datasets free to use. The datasets contain 6 fields:
+1. The sentiment of the tweet, where 0 is negative, 2 is neutral, and 4 is positive
+2. The id of the tweet
+3. The date of the tweet
+4. The query of the tweet
+5. The twitter user who created the tweet
+6. The text contained in the tweet
 
-The class LoadQuery begins by looping through the different pages available, from which the user can select which data they want while having all options available, and then choose which dataset they want to pull. Next, the user will choose the periodicity of the data, if it comes in multiple formats, as well as the type of data that they want to pull, again, if the data comes in mulitple formats. Once chosen, the program will then paginate through the queries until all data is pulled. The data is then turned into a Pandas dataframe format, which can be accessed through the ```.df``` attribute of the LoadQuery object. The dataframe will be indexed by date.
+First I load the data, and then run value counts to see how much of each sentiment each dataset contains:
+```Python
+df_train = pd.read_csv('training.1600000.processed.noemoticon.csv',encoding='latin-1')
+df_test = pd.read_csv('testdata.manual.2009.06.14.csv',encoding='latin-1')
+df_train['sentiment'].value_counts().reset_index()
+```
+|    |   index |   sentiment |
+|---:|--------:|------------:|
+|  0 |       0 |      800000 |
+|  1 |       4 |      800000 |
 
 ```Python
-date_switch = {'annual':'%Y',
-                   'monthly':'%Y-%m',
-                   'daily':'%Y-%m-%d'}
-
-class LoadQuery:
-    def __init__(self, header = "",page = "", key = "",data = None, frequency = None,response = None, df = None, format = None):
-        self.header = 'https://api.eia.gov/v2'
-        self.page = page ##Which page you want to access. Created by running load_page
-        self.key= #XXXXXXXXX
-        self.data = data ##The data you want to access with the query. Created by running choose_query
-        self.frequency = frequency
-        self.response = response
-        self.df = df
-        self.format = format
-
-    def load_page(self):
-        ##When running load_page, this creates
-        api_url = self.header+self.page+self.key
-        response = requests.get(api_url)#, verify = False)
-        response = response.json()
-        if 'frequency' not in response['response'].keys():
-            print('Choose your id')
-            check = []
-            for i in response['response']['routes']:
-                print("id: ", i['id'], " Name: ", i['name'],'\r')
-                check.append(i['id'])
-            next_page = input()
-            if next_page not in check:
-                print('What you typed was not an option')
-                self.load_page()
-            else:
-                self.page+='/'+next_page
-                self.load_page()
-        api_url = self.header+self.page+self.key
-        response = requests.get(api_url)
-        self.response = response.json()
-
-
-    def choose_frequency(self):
-        if len(self.response['response']['frequency']) == 1:
-            self.frequency = self.response['response']['frequency'][0]['id']
-        else:
-            print('Choose the frequency')
-            check = []
-            for i in self.response['response']['frequency']:
-                check.append(i['id'])
-                print(i['id'])
-            frequency = input()
-            if frequency in check:
-                self.frequency = frequency
-            else:
-                print('What you typed was not an option')
-                self.choose_frequency()
-
-    def choose_data(self):
-        if len(self.response['response']['data'].keys()) == 1:
-            self.data = list(self.response['response']['data'].keys())[0]
-        else:
-            print('Choose the data type')
-            check = []
-            for i in self.response['response']['data'].keys():
-                check.append(i)
-                print(i)
-            data = input()
-            if data in check:
-                self.data = data
-            else:
-                print('What you typed was not an option')
-                self.choose_data()
-
-    def create_info(self):
-        api_url = self.header+self.page+self.key+'&data[]='+self.data+'&frequency='+self.frequency
-        response = requests.get(api_url)
-        self.response = response.json()    
-
-    def create_every_response(self):
-        self.format = date_switch[self.frequency]
-        api_url = self.header+self.page+"/data"+self.key+'&data[]='+self.data+'&frequency='+self.frequency
-        response = requests.get(api_url)
-        data = response.json()
-        final = data['response']['data']
-        total = data['response']['total']
-        offset = 5000
-        if total <= 5000:
-            self.response = final
-        else:
-            num_loops = math.floor(total/5000)
-            offset = 5000
-            for i in range(0,num_loops):
-                api_url = self.header+self.page+"/data"+self.key+'&data[]='+self.data+'&frequency='+self.frequency+'&offset='+str(offset)
-                response = requests.get(api_url)
-                data = response.json()
-                final += data['response']['data']
-                offset += 5000
-                percent = (offset-5000)/total*100
-                print("%.2f"%percent,'% of the way done')
-            self.response = final
-
-    def get_total_number_of_data_points(self):
-        api_url = self.header+self.page+"/data"+self.key+'&data[]='+self.data+'&frequency='+self.frequency
-        response = requests.get(api_url)
-        response = response.json()
-        return response['response']['total']
-
-    def create_df(self):
-        api_url = self.header+self.page+"/data"+self.key+'&data[]='+self.data+'&frequency='+self.frequency
-        response = requests.get(api_url)
-        data = response.json()
-        self.df = pd.DataFrame(data['response']['data'])
-
-    def return_url(self):
-        url = self.header+self.page+"/data"+self.key+'&data[]='+self.data+'&frequency='+self.frequency
-        return url
-
-    def create_data_df(self):
-        self.df = pd.DataFrame(self.response)
-
-    def create_index(self):
-        self.df['period'] = pd.to_datetime(self.df['period'],format = self.format)
-        self.df['time_idx'] = pd.DatetimeIndex(self.df['period'])
-        self.df = self.df.set_index('time_idx')
-        self.df = self.df.sort_values('time_idx')
-
-    def run_all(self):
-        self.load_page()
-        self.choose_frequency()
-        self.choose_data()
-        self.create_info()
-        self.create_every_response()
-        self.df = pd.DataFrame(self.response).drop_duplicates()
-        self.create_index()
-        print('Data has been obtained')
+df_test['sentiment'].value_counts().reset_index()
 ```
+|    |   index |   sentiment |
+|---:|--------:|------------:|
+|  0 |       4 |         182 |
+|  1 |       0 |         177 |
+|  2 |       2 |         139 |
+
+Looking at the datasets, we see that the training datasets have a large number of only negative and positive sentiments and no neutral statements, while the testing datasets have a small number of negative and positive sentiments, and a small number of neutral statements. Because the training dataset does not contain any neutral sentiment tweets nor does the testing dataset contain large numbers of validation data, I decide to drop the neutral tweets from the dataset and combine the two datasets. When building my models, I run a 80/20 split on the training/testing data so that the size of the validation dataset increases.
+
+```python
+df_test = df_test[df_test['sentiment']!=2]
+df_concat = pd.concat([df_train,df_test],axis=0)
+df_concat.head()
+```
+|    |   sentiment |    user_id | date                         | query    | user            | text                                                                                                                |
+|---:|------------:|-----------:|:-----------------------------|:---------|:----------------|:--------------------------------------------------------------------------------------------------------------------|
+|  0 |           0 | 1467810369 | Mon Apr 06 22:19:45 PDT 2009 | NO_QUERY | _TheSpecialOne_ | @switchfoot http://twitpic.com/2y1zl - Awww, that's a bummer.  You shoulda got David Carr of Third Day to do it. ;D |
+|  1 |           0 | 1467810672 | Mon Apr 06 22:19:49 PDT 2009 | NO_QUERY | scotthamilton   | is upset that he can't update his Facebook by texting it... and might cry as a result  School today also. Blah!     |
+|  2 |           0 | 1467810917 | Mon Apr 06 22:19:53 PDT 2009 | NO_QUERY | mattycus        | @Kenichan I dived many times for the ball. Managed to save 50%  The rest go out of bounds                           |
+|  3 |           0 | 1467811184 | Mon Apr 06 22:19:57 PDT 2009 | NO_QUERY | ElleCTF         | my whole body feels itchy and like its on fire                                                                      |
+|  4 |           0 | 1467811193 | Mon Apr 06 22:19:57 PDT 2009 | NO_QUERY | Karoli          | @nationwideclass no, it's not behaving at all. i'm mad. why am i here? because I can't see you all over there.      |
+
+Once I combine the datasets, I want to clean them up. First, I make all the letters lowercase so all the words are homogenous. Next, I get rid of twitter usernames and links by filtering out words that contain an "@" and "http", respectively, as those words do not contain sentiment. I also replace 4 to 1 in the sentiment column as it's generally good practice.
+
+```Python
+df_concat['text'] = df_concat['text'].str.lower()
+df_concat['text'] = df_concat['text'].apply(lambda x: ' '.join([word for word in x.split() if '@' not in word]))
+df_concat['text'] = df_concat['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+df_concat['text'] = df_concat['text'].apply(lambda x: ' '.join([word for word in x.split() if 'http' not in word]))
+df_concat['text'] = df_concat['text'].str.replace(r'[^\w\s]','',regex=True)
+df_concat['sentiment'] = df_concat['sentiment'].replace(4,1)
+df_concat.head()
+```
+|    |   sentiment |    user_id | date                         | query    | user            | text                                                                       |
+|---:|------------:|-----------:|:-----------------------------|:---------|:----------------|:---------------------------------------------------------------------------|
+|  0 |           0 | 1467810369 | Mon Apr 06 22:19:45 PDT 2009 | NO_QUERY | _TheSpecialOne_ | awww thats bummer shoulda got david carr third day                         |
+|  1 |           0 | 1467810672 | Mon Apr 06 22:19:49 PDT 2009 | NO_QUERY | scotthamilton   | upset cant update facebook texting might cry result school today also blah |
+|  2 |           0 | 1467810917 | Mon Apr 06 22:19:53 PDT 2009 | NO_QUERY | mattycus        | dived many times ball managed save 50 rest go bounds                       |
+|  3 |           0 | 1467811184 | Mon Apr 06 22:19:57 PDT 2009 | NO_QUERY | ElleCTF         | whole body feels itchy like fire                                           |
+|  4 |           0 | 1467811193 | Mon Apr 06 22:19:57 PDT 2009 | NO_QUERY | Karoli          | no not behaving im mad cant see                                            |
+
+Now, because I removed the apostrophes in each word, I filter to only contain tweets that contain the words 'no', 'not', 'never', 'never', or 'nor'.
+
+```Python
+df_neg = df_concat[df_concat['text'].str.contains(r"no|not|never|didnt|dont|nor",regex=True)]
+df_neg = df_neg.reset_index()
+df_neg.head()
+```
+|    |   index |   sentiment |    user_id | date                         | query    | user            | text                                                           |
+|---:|--------:|------------:|-----------:|:-----------------------------|:---------|:----------------|:---------------------------------------------------------------|
+|  0 |       4 |           0 | 1467811193 | Mon Apr 06 22:19:57 PDT 2009 | NO_QUERY | Karoli          | no not behaving im mad cant see                                |
+|  1 |       5 |           0 | 1467811372 | Mon Apr 06 22:20:00 PDT 2009 | NO_QUERY | joy_wolf        | not whole crew                                                 |
+|  2 |       7 |           0 | 1467811594 | Mon Apr 06 22:20:03 PDT 2009 | NO_QUERY | coZZ            | hey long time no see yes rains bit bit lol im fine thanks hows |
+|  3 |       8 |           0 | 1467811795 | Mon Apr 06 22:20:05 PDT 2009 | NO_QUERY | 2Hood4Hollywood | nope                                                           |
+|  4 |      10 |           0 | 1467812416 | Mon Apr 06 22:20:16 PDT 2009 | NO_QUERY | erinx3leannexo  | spring break plain city snowing                                |
+
+
+### Class Imbalance
+When performing a classification analysis, it is important to make sure that the classes you are differentiating are of similar magnitude, i.e. balanced. I will visually check this by plotting the number of negative and positive tweets below.
+
+```Python
+x_count = list(df_neg['sentiment'].unique())
+y_count = list(df_neg['sentiment'].value_counts())
+fig = plt.figure(figsize = (12, 8))
+ 
+# creating the bar plot
+plt.bar(x_count, y_count, color ='maroon',
+        width = .8, tick_label=[0,1])
+ 
+plt.xlabel("Sentiments")
+plt.ylabel("Value Counts")
+plt.title("Number of Each Sentiment")
+plt.show()
+```
+
+<p align="center">
+  <img src="/images/sentiment_count.png" width="700">
+</p>
+
+Clearly, the number of negative and positive tweets with negation are on the same order of magnitude, and so the classes are balanced.
+
+### Identifying Outliers
 
 ## Building the Models
 
