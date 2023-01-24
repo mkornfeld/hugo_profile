@@ -167,6 +167,7 @@ params:
         - "Sklearn"
         - "NLP"
         - "Forecasting"
+        - "SQL"
 
   # Experience
   experience:
@@ -231,7 +232,7 @@ params:
           enable: false
           url: "https://example.com"
         content: |
-          Calculus throughout my 4 years, where I worked with students during office hours and graded assignments. Topics that I have taught include trigonometry, precalculus, calculus I-IV, linear algebra, differential equations, and mechanics. I have found success with my students by assigning them homework, creating problems that address their weaknesses, and reinforcing topics they are comfortable with.
+          I was a TA for Calculus during my 4 years at UChicago, where I worked with students during office hours and graded assignments. Topics that I have taught include trigonometry, precalculus, calculus I-IV, linear algebra, differential equations, and mechanics. I have found success with my students by assigning them homework, creating problems that address their weaknesses, and reinforcing topics they are comfortable with.
 
       - job: "Research Assistant"
         company: "UChicago STEM Education"
