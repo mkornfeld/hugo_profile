@@ -239,7 +239,7 @@ params:
         companyUrl: "https://stemed.uchicago.edu/"
         date: "January 2020 - June 2021"
         featuredLink:
-          enable: true
+          enable: false
           url: "https://stemed.uchicago.edu/"
         content: |
           As a third-year and fourth-year in college, I worked with the University of Chicago's STEM Education Office, where I drew insights from a curriculum that we implemented at Chicago public schools and performed various office duties.
