@@ -120,7 +120,7 @@ params:
     subtitle: "Data Scientist and AI and Analytics Consultant"
     #content: "A passionate web app developer. I tend to make use of modern web technologies to build websites that looks great, feels fantastic, and functions correctly."
     content: "Full time, I am an AI and Analytics Consultant where I help develop full stack solutions for clients and use machine learning and data science to drive insights. On the side, I enjoy tutoring, reading, running, and playing chess."
-    image: /images/myself.jpg
+    image: /images/headshot.png
     button:
       enable: true
       name: "Portfolio"

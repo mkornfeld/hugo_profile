@@ -434,7 +434,7 @@ natural_gas_data.head()
 
 I create the model by passing the dataframe ```natural_gas_data```, train the model by having the previous 50 days predict the next day, forecast the next 150 days, and use the data in the column "value".
 
-After training the models, the best model is graphed below. The Support Vector regressor was the best model, and had an r<sup>2</sup> value of 0.982 with the testing data and a mean average error of 0.190.
+After training the models, the best model is graphed below. The Random Forest regressor was the best model, and had an r<sup>2</sup> value of 0.988 with the testing data and a mean average error of 0.158.
 
 ```Python
 natural_gas_forecast = ForecastModel(df = natural_gas_data, num_shifts = 50, num_predict = 150, col = 'value')
@@ -452,27 +452,27 @@ XGBoost trained
 <!-- ![title](/images/nat_gas_fut_1.png)
 ![title](/images/nat_gas_fut_2.png) -->
   <p align="center">
-    <img src="/images/nat_gas_fut_1f.png" width="700">
+    <img src="/images/natgasrf_final_large.png" width="750">
   </p>
 
   <p align="center">
-    <img src="/images/nat_gas_fut_2f.png" width="700">
+    <img src="/images/natgasrf_final.png" width="750">
   </p>
 
-Below I plot the best predictions for each of the different regressors. In addition to the Suport Vector regressor, the XGBoost regressor closely predicted the test data, with an r<sup>2</sup> of 0.979 and an MAE of 0.218. The RandomForest regressor, however, clearly did not capture the trends in the data.
+Below I plot the best predictions for each of the different regressors. In addition to the Random Forest regressor, the Support Vector regressor closely predicted the test data, with an r<sup>2</sup> of 0.987 and an MAE of 0.161, as well as the XGBoost regression, which had an r<sup>2</sup> of 0.986 and an MAE of 0.170.
 
 ```Python
 natural_gas_forecast.plot_data()
 ```
 
 <p align="center">
-  <img src="/images/nat_gas_fut_1f.png" width="700">
+  <img src="/images/natgassvr_final.png" width="750">
 </p>
 <p align="center">
-  <img src="/images/nat_gas_fut_rff.png" width="700">
+  <img src="/images/natgasrf_final.png" width="750">
 </p>
 <p align="center">
-  <img src="/images/nat_gas_fut_xgboostf.png" width="700">
+  <img src="/images/natgasxgboost_final.png" width="750">
 </p>
 
 
@@ -615,7 +615,7 @@ petreoleum_forecast_data.df = petroleum_forecast.df[petroleum_forecast.df['serie
 petreoleum_forecast_data.df = petreoleum_forecast_data.df.dropna()
 ```
 
-After training the different models, this time the XGBoost regressor had the smallest MAE at 0.088 and the largest r<sup>2</sup> at 0.982 for the testing data.
+After training the different models, the Random Forest regressor again the smallest MAE at 0.058 and the largest r<sup>2</sup> at 0.99 for the testing data.
 
 ```Python
 petroleum_forecast_model = ForecastModel(df = petreoleum_forecast_data.df, num_shifts = 50, num_predict = 150, col = 'value')
@@ -631,14 +631,14 @@ Training XGBoost
 XGBoost trained
 ```
 <p align="center">
-  <img src="/images/pet_fut_11.png" width="700">
+  <img src="/images/petroleumrf_final_large.png" width="750">
 </p>
 <p align="center">
-  <img src="/images/pet_fut_zoom.png" width="700">
+  <img src="/images/petroleumrf_final.png" width="750">
 </p>
 
 
-Looking at the rest of the models, we see that the Support Vector regressor also predicted the data very well, while the RandomForest regressor was unable to capture the trend.
+Looking at the other the models, we see that the Support Vector regressor and the XGBoost regressor also captured the trend.
 
 ```Python
 petroleum_forecast_model.plot_data()
@@ -646,20 +646,18 @@ petroleum_forecast_model.plot_data()
 
 
 <p align="center">
-  <img src="/images/pet_fut_svr.png" width="700">
+  <img src="/images/petroleumsvr_final.png" width="750">
 </p>
 <p align="center">
-  <img src="/images/pet_fut_rf.png" width="700">
+  <img src="/images/petroleumrf_final.png" width="750">
 </p>
 <p align="center">
-  <img src="/images/pet_fut_zoom.png" width="700">
+  <img src="/images/petroleumxgboost_final.png" width="750">
 </p>
 
 
 ## Conclusions and Next Steps
 
-Taking a look at the natural gas and petroleum futures predictions, we are able to see that the models captured the volatility due to the Covid-19 pandemic and the invasion of Ukraine in their forecasting. As a result, it seems that univariate time-series models can be useful and cost-effective in forecasting markets.
+Taking a look at the natural gas and petroleum futures predictions, we are able to see that the models captured the volatility due to the Covid-19 pandemic and the invasion of Ukraine in their forecasting fairly well. Although the petroleum forecasts had more difficulty during the invasion of Ukraine, the Random Forest model captured the overall movement. To address this, a model that includes news events could be helpful, as I discuss below. As a result, it seems that univariate time-series models can be useful and cost-effective in forecasting markets in the short term.
 
-I believe that there are several ways to improve this project. First, when testing the models across other datasets, the models were occasionally unable to capture seasonality in the data. As a result, when data appears more seasonal, performing a seasonality decomposition could increase model performance. Secondly, there were some datasets where models had more difficulty making predictions. Creating a multivariate model that incorporates features such as GDP, local and international conflicts, different weather events, and location could improve model performance as well.
-
-Finally, this model only included 1 period forecasts. It would be interesting to see how this approach fares in predicting multi-period forecasts, such as a 7 day forecast or a 30 day forecast. To accomplish this, including an RNN neural net model could be helpful in creating these forecasts.
+I believe that there are several ways to improve this project. First, when testing the models across other datasets, some models were more seasonal than the data shown above. As a result, when data appears more seasonal, performing a seasonality decomposition could increase model performance while decreasing complexity. Secondly, there were some datasets where models had more difficulty making predictions. Creating a multivariate model that incorporates features such as GDP, local and international conflicts, different weather events, and location could improve model performance as well. Finally, this model only included 1 period forecasts. It would be interesting to see how this approach fares in predicting multi-period forecasts, such as a 7 day forecast or a 30 day forecast. To accomplish this, including an RNN neural net model could be helpful in creating these forecasts.
