@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Myles Kornfeld</title>
+    <link>https://hugo-profile.netlify.app/blogs/</link>
+    <description>Recent content in Blogs on Myles Kornfeld</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Jan 2023 23:29:21 +0530</lastBuildDate><atom:link href="https://hugo-profile.netlify.app/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Predicting Energy Futures</title>
+      <link>https://hugo-profile.netlify.app/blogs/forecasting_energy_markets/</link>
+      <pubDate>Tue, 03 Jan 2023 23:29:21 +0530</pubDate>
+      
+      <guid>https://hugo-profile.netlify.app/blogs/forecasting_energy_markets/</guid>
+      <description>Forecasting Energy Markets Introduction Over the past several years, global events have rocked the energy markets: the Covid-19 pandemic caused the price of oil to crash, while a combination of inflation and the sanctions placed on Russia due to its invasion of Ukraine have caused the price of oil and natural gas to skyrocket. As a result, it is important to be able to forecast energy markets accurately despite global uncertainty.</description>
+    </item>
+    
+  </channel>
+</rss>

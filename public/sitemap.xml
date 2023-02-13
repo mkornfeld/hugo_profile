@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://hugo-profile.netlify.app/blogs/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/tags/energy/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/tags/forecasting/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/blogs/forecasting_energy_markets/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/tags/regression/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/tags/</loc>
+    <lastmod>2023-01-03T23:29:21+05:30</lastmod>
+  </url><url>
+    <loc>https://hugo-profile.netlify.app/categories/</loc>
+  </url>
+</urlset>
