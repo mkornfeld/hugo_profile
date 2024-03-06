@@ -117,10 +117,12 @@ params:
     enable: true
     #intro: "Hi, my name is"
     title: "Myles Kornfeld"
-    subtitle: "Data Scientist and AI and Analytics Consultant"
+    subtitle: "Senior Data Engineer"
     #content: "A passionate web app developer. I tend to make use of modern web technologies to build websites that looks great, feels fantastic, and functions correctly."
-    content: "Full time, I am an AI and Analytics Consultant where I help develop full stack solutions for clients and use machine learning and data science to drive insights. On the side, I enjoy tutoring, reading, running, and playing chess."
-    image: /images/headshot.png
+    content: "Full time, I am a Senior Data Engineer at Weiss Multi-Strategy Advisers where, on the risk team, I ensure 
+              data quality and consistency and provide statistical insights to our PMs. On the side,
+              I enjoy tutoring, reading, martial arts, running, and playing chess."
+    image: /images/headshot_3_6_2024.png
     button:
       enable: true
       name: "Portfolio"
@@ -144,15 +146,18 @@ params:
     image: "/images/myles2.png"
     content:
 
+      <h4> Weiss Multi-Strategy Advisers </h4>
+      At Weiss Multi-Strategy Advisers, I am a senior data engineer on the Risk Team where I have ensured data quality and consistency throughout the firm. I have designed and implemtend schema for internal Bloomberg Data License Data, built out new advanced analytical tools in Python, and made those tools accesible to PMs so they could more easily manage risk.
+      <br><br>
       <h4> IBM </h4>
-      At IBM, I am a full stack AI and Analytics consultant. There, I work with clients to to drive insights through data science and ensure that their data can be accessed throughout their enterprise. Most recently, my team designed a data architecture solution for a multibillion dollar company. In the past, I worked in-house to test and develop forecasting and data harmonization software for clients.
+      At IBM, I was a full stack AI and Analytics consultant. There, I worked with clients to to drive insights through data science and ensure that their data can be accessed throughout their enterprise. For my last project, my team designed a data architecture solution for a Fortune 500 automotive company. In the past, I worked in-house to test and develop forecasting and data harmonization software for clients.
       <br><br>
       <h4> The University of Chicago </h4>
       When I first enrolled in UChicago, my goal was to study physics, attend graduate school, and eventually be a professor and perform research. Finding patterns from data and to then understand a larger picture through math was exciting, and I was excited to pursue this field in such a rigorous environment. During my time at UChicago, I challenged myself while helping others grow. I graduated in July 2021 with a BA in Physics with honors and a BS in Mathematics; my favorite classes included Graduate Quantum Mechanics and Graduate Relativity; I became the President of the Society of Physics Students, where I ran several fundraisers to promote STEM education; I was a Teacher's Assistant for Calculus I-IV, where I helped students learn and understand the subject during my office hours.
       <br><br>
       I was fortunate enough to be able to intern at Fermilab, a national physics laboratory, throughout college. When I was a third-year, I worked in their theoretical physics department. For my main project, I worked alongside theoretical physicists, nuclear physicists, and neutrino physicists to develop software that could simulate the interactions between  particles in any environment. More specifically, I developed software that simulated the interactions between known neutrinos and theoretical neutrinos using Monte Carlo simulations.
       <br><br>
-      While at Fermilab, I found that my true passion lay in coding and running simulations. It was during this period that I taught myself how to implement neural networks for forecasting, NLP, and image recognition. I also took classes, such as Introduction to Random Matrices, to pursue this interest. After several side projects, I decided to pursue data science full time after college.
+      While at Fermilab, I found that my true passion lay in coding and running simulations. It was during this period that I taught myself how to implement neural networks for forecasting, NLP, and image recognition. I also took classes, such as Introduction to Random Matrices, to pursue this interest. After several side projects, I decided to pursue data science and engineering full time after college.
       <br><br>
       <h4>Skills</h4>
     skills:
@@ -162,28 +167,66 @@ params:
         - "Python"
         - "Pandas"
         - "Numpy"
+        - "Dash"
+        - "Plotly"
+        - "Flask"
+        - "Swagger UI"
         - "MatPlotlib"
         - "Tensorflow"
         - "Sklearn"
         - "NLP"
         - "Forecasting"
         - "SQL"
+        - "Cron"
+        - "Factor decomposition analysis"
 
   # Experience
   experience:
     enable: true
     # title: "Custom Name"
     items:
-      - job: "AI and Analytics Consultant"
-        company: "IBM"
-        companyUrl: "https://www.ibm.com/us-en?ar=1"
-        date: "Jul 2021 - present"
+      - job: "Senior Data Engineer (also worked in a Data Scientist capacity)"
+        company: "Weiss Multi-Strategy Advisers"
+        companyUrl: "https://www.gweiss.com/"
+        date: "Sep 2023 - Present"
         featuredLink:
           enable: false
           name: "View the project"
           url: "https://example.com"
         content: |
-          I am currently working as an AI and Analytics Consultant at IBM. Below I list my current and previous projects. On the side, I deliver knowledge transfer sessions on data science topics to my team.
+          I am a senior data engineer at Weiss Multi-Strategy Advisers where I work on the risk team and report directly to the Chief Risk Officer. Below I list my experiences.
+
+          Main Responsibilities (Risk Team):<br>
+          - Worked directly under the chief risk officer to develop our data stack to run advanced analyses on our risk
+          
+          Risk Dashboard with Advanced Statistical Modelling:<br>
+          - Developed and deployed a series of Plotly dashboards to provide live insights on intraday investment risk
+          - Factor Analysis: Helped portfolio managers understand how an n-sigma factor move affects PnL via an interactive table utilizing minimum torsion analyses of internal and external factor-based models
+          - Single-Name Analysis: Calculated intraday beta-adjusted excess returns on single names and detected outlier movers across strategies via a Mahalanobis Distance analysis
+          
+          Internal API Data Migration:<br>
+          - Oversaw, developed, and implemented the migration of an internal API from R to Python that pulled data from an internal SQL server for use across the firm
+          - Deployed the API within a Linux server; helped analysts add their own functionality
+          - Created unit tests to ensure that the API functions were providing consistent, correct outputs
+         
+          Bloomberg Data Migration:<br>
+          - Developed and implemented a new SQL schema for Bloomberg Data License data that improved data quality and consistency and allowed us to more easily identify where bugs occurred
+          - Built a program to automatically update the database and perform data validation checks daily
+          
+          Mentorship/Leadership:<br>
+          - Helped a recent college graduate learn Python techniques, coding best practices, full-stack development, etc.
+          - Aided in the deployment of an internal dashboard they built to track the firm’s spending
+
+      - job: "AI and Analytics Consultant"
+        company: "IBM"
+        companyUrl: "https://www.ibm.com/us-en?ar=1"
+        date: "Jul 2021 - Aug 2023"
+        featuredLink:
+          enable: false
+          name: "View the project"
+          url: "https://example.com"
+        content: |
+          I was an AI and Analytics Consultant at IBM. Below I list some of the projects I worked on. On the side, I delivered knowledge transfer sessions on data science topics to my team.
 
           Current Project:<br>
           - Developer<br>
@@ -309,6 +352,9 @@ params:
     enable: true
     # title: "Custom Name"
     items:
+      - title: Minimum-Torsion Analysis
+        content: Developed and deployed a minimum-torsion analysis model based on the work by Meucci et al., 2015.
+        url: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2276632
       - title: Spark Chamber
         content: Constructed a spark chamber with other students at UChicago that is now on display at the Kersten Physics Teaching Center.
         #url: https://example.com
