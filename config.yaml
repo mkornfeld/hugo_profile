@@ -119,8 +119,8 @@ params:
     title: "Myles Kornfeld"
     subtitle: "Senior Data Engineer"
     #content: "A passionate web app developer. I tend to make use of modern web technologies to build websites that looks great, feels fantastic, and functions correctly."
-    content: "Full time, I am a Senior Data Engineer at Weiss Multi-Strategy Advisers where, on the risk team, I ensure 
-              data quality and consistency and provide statistical insights to our PMs. On the side,
+    content: "Before the fund ceased operations in early March 2024, I was a Senior Data Engineer at Weiss Multi-Strategy Advisers where, on the risk team, I ensured 
+              data quality and consistency and provided statistical insights to our PMs. On the side,
               I enjoy tutoring, reading, martial arts, running, and playing chess."
     image: /images/headshot_3_6_2024.png
     button:
@@ -146,8 +146,8 @@ params:
     image: "/images/myles2.png"
     content:
 
-      <h4> Weiss Multi-Strategy Advisers </h4>
-      At Weiss Multi-Strategy Advisers, I am a senior data engineer on the Risk Team where I have ensured data quality and consistency throughout the firm. I have designed and implemtend schema for internal Bloomberg Data License Data, built out new advanced analytical tools in Python, and made those tools accesible to PMs so they could more easily manage risk.
+      <h4> Weiss Multi-Strategy Advisers (ceased operations March 2024) </h4>
+      At Weiss Multi-Strategy Advisers, I was a senior data engineer on the Risk Team where I have ensured data quality and consistency throughout the firm. I designed and implemented schema for internal Bloomberg Data License Data, built out new advanced analytical tools in Python, and made those tools accesible to PMs so they could more easily manage risk.
       <br><br>
       <h4> IBM </h4>
       At IBM, I was a full stack AI and Analytics consultant. There, I worked with clients to to drive insights through data science and ensure that their data can be accessed throughout their enterprise. For my last project, my team designed a data architecture solution for a Fortune 500 automotive company. In the past, I worked in-house to test and develop forecasting and data harmonization software for clients.
@@ -188,13 +188,13 @@ params:
       - job: "Senior Data Engineer (also worked in a Data Scientist capacity)"
         company: "Weiss Multi-Strategy Advisers"
         companyUrl: "https://www.gweiss.com/"
-        date: "Sep 2023 - Present"
+        date: "Sep 2023 - Mar 2024"
         featuredLink:
           enable: false
           name: "View the project"
           url: "https://example.com"
         content: |
-          I am a senior data engineer at Weiss Multi-Strategy Advisers where I work on the risk team and report directly to the Chief Risk Officer. Below I list my experiences.
+          I was a senior data engineer at Weiss Multi-Strategy Advisers where I worked on the risk team and reported directly to the Chief Risk Officer. Below I list my experiences.
 
           Main Responsibilities (Risk Team):<br>
           - Worked directly under the chief risk officer to develop our data stack to run advanced analyses on our risk
@@ -210,7 +210,7 @@ params:
           - Created unit tests to ensure that the API functions were providing consistent, correct outputs
          
           Bloomberg Data Migration:<br>
-          - Developed and implemented a new SQL schema for Bloomberg Data License data that improved data quality and consistency and allowed us to more easily identify where bugs occurred
+          - Developed and implemented a new SQL schema for Bloomberg Data License data that improved data quality and consistency and enabled the easier identification of where bugs occurred
           - Built a program to automatically update the database and perform data validation checks daily
           
           Mentorship/Leadership:<br>
